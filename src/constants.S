@@ -1,5 +1,5 @@
 /*
- * librv64strings - RISC-V strings library
+ * libpltnc - RISC-V library
  *
  * Copyright (C) 2026 krakenlake
  *
