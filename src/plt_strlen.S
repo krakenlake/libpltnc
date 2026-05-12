@@ -7,7 +7,7 @@
 #include "config.h"
 #include "riscv/register.h"
 
-.global strlen
+.global plt_strlen
 
 .text
 
@@ -15,8 +15,8 @@
 # fast strlen function that makes use of multi-byte register loads
 # in: a0 = char* str
 # out: a0 = number of bytes (not counting termination)
-.type strlen, @function
-strlen:
+.type plt_strlen, @function
+plt_strlen:
 	# load constants for zero byte testing only once
 	la		a2, check_zero_consts
 	LOAD	t4, 0(a2)				# t4 = 0x0101010101010101
@@ -48,5 +48,5 @@ scan_done:
 	# a0 is now pointing to the last char in str
 	sub		a0, a0, a1
 	ret
-.size strlen, .-strlen
+.size plt_strlen, .-plt_strlen
 

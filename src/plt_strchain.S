@@ -7,7 +7,7 @@
 #include "config.h"
 #include "riscv/register.h"
 
-.global strchain
+.global plt_strchain
 
 .text
 
@@ -16,8 +16,8 @@
 # in: a0 = char* str1
 # in: a1 = char* str2
 # out: ptr to null-termination of str1
-.type strchain, @function
-strchain:
+.type plt_plt_strchain, @function
+plt_strchain:
 	# in the first part we find the end of str1
 
 	# load constants for zero byte testing only once
@@ -89,5 +89,5 @@ store_bytes:
 
 copy_done:
 	ret
-.size strchain, .-strchain
+.size plt_strchain, .-plt_strchain
 
