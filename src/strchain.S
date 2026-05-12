@@ -29,7 +29,7 @@ strchain:
 scan_check_align:
 	andi	t2, a0, XLEN_BYTES-1	# check for 8-byte alignment
 	bnez	t2, scan_load_byte
-scan_load_quad:
+scan_load_xlen_bytes:
 	LOAD	t1, 0(a0)				# load full register
 	# check if t1 contains any 0x00 bytes
 	sub 	t3, t1, t4				# t3 = t1 - 0x0101010101010101
@@ -37,16 +37,16 @@ scan_load_quad:
 	and		t6, t6, t5				# t6 = ~t1 & 0x8080808080808080
 	and		t6, t3, t6				# t6 = (t1 - 0x0101010101010101) & (~t1 & 0x8080808080808080)
 	# result in t6 - if it is 0, there were no 0x00 bytes in t1
-	beqz	t6, scan_advance_quad
+	beqz	t6, scan_advance_xlen_bytes
 scan_load_byte:
 	# continue byte-wise if there was a 0x00 byte in t1
 	lb		t1, 0(a0)
 	beqz	t1, scan_done			# done scanning if termination found
 	addi	a0, a0, 1
 	j		scan_check_align
-scan_advance_quad:
+scan_advance_xlen_bytes:
 	addi	a0, a0, XLEN_BYTES
-	j		scan_load_quad
+	j		scan_load_xlen_bytes
 scan_done:
 	# a0 is now guaranteed to point to the end of str1
 
@@ -55,7 +55,7 @@ copy_check_align:
 	# todo: we should check a0 as well 
 	andi	t2, a1, XLEN_BYTES-1	# check for 8-byte alignment of src
 	bnez	t2, copy_bytes			# go fetching 8 bytes at once if XLEN_BYTES aligned
-copy_quad:
+copy_xlen_bytes:
 	# when ptr into str2 is XLEN_BYTES aligned, do full register loads
 	LOAD	t1, 0(a1)				# load full register
 	# check if t1 contains any 0x00 bytes
@@ -68,7 +68,7 @@ copy_quad:
 	STORE	t1, 0(a0)				# store 8 bytes
 	addi	a0, a0, XLEN_BYTES		# advance to next quad
 	addi	a1, a1, XLEN_BYTES
-	j		copy_quad				# next 8 bytes
+	j		copy_xlen_bytes				# next 8 bytes
 copy_bytes:
 	# copy byte-wise until we hit next alignment
 	lb		t1, 0(a1)				
