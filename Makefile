@@ -11,11 +11,10 @@ LIBPLTNC_TARGET_XLEN ?= 64
 
 # tools
 LIBPLTNC_TOOLBIN	?= /usr/local/bin
-LIBPLTNC_GCC_INC	= /usr/local/Cellar/riscv-gnu-toolchain/main/riscv64-unknown-elf/include
-LIBPLTNC_CC			?= $(LIBPLTNC_TOOLBIN)/riscv64-elf-gcc
-LIBPLTNC_CPP		?= $(LIBPLTNC_TOOLBIN)/riscv64-elf-cpp
-LIBPLTNC_AR			?= $(LIBPLTNC_TOOLBIN)/riscv64-elf-ar
-LIBPLTNC_RANLIB		?= $(LIBPLTNC_TOOLBIN)/riscv64-elf-ranlib
+LIBPLTNC_CC			?= $(LIBPLTNC_TOOLBIN)/riscv64-unknown-elf-gcc
+LIBPLTNC_CPP		?= $(LIBPLTNC_TOOLBIN)/riscv64-unknown-elf-cpp
+LIBPLTNC_AR			?= $(LIBPLTNC_TOOLBIN)/riscv64-unknown-elf-ar
+LIBPLTNC_RANLIB		?= $(LIBPLTNC_TOOLBIN)/riscv64-unknown-elf-ranlib
 
 # CFLAGS
 CFLAGS = -march=rv$(LIBPLTNC_TARGET_XLEN)g
@@ -55,7 +54,7 @@ LIBPLTNC_OBJ_C		= $(LIBPLTNC_SRC_C:./src/%.c=$(LIBPLTNC_BUILD)/%.o)
 LIBPLTNC_OBJ		= $(LIBPLTNC_OBJ_S) $(LIBPLTNC_OBJ_C)
 LIBPLTNC_DEP		= $(LIBPLTNC_OBJ:%.o=%.d)
 
-INCLUDES = -Iinclude -I$(LIBPLTNC_BUILD) -I$(LIBPLTNC_GCC_INC)
+INCLUDES = -Iinclude -I$(LIBPLTNC_BUILD)
 
 # dependencies
 -include $(LIBPLTNC_DEP)
