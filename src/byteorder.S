@@ -36,6 +36,5 @@ swap32:
 	slli	t0, a0, 24			# shift byte 0 -> byte 3
 	and		t2, t0, t1
 	or		a0, a1, t2			# final return register is a0
-	sext.w	a0, a0				# sign-extend final result
 	ret
 .size swap32, .-swap32
