@@ -12,7 +12,7 @@
 .text
 
 
-# swap lower 4 bytes: big endian to low endian
+# swap 4 lower bytes in register: BIG_ENDIAN <---> LOW_ENDIAN
 # in: a0
 # out: a0
 .type swap32, @function
@@ -41,7 +41,7 @@ swap32:
 .size swap32, .-swap32
 
 
-# swap 8 bytes: big endian to low endian
+# swap 8 bytes in register: BIG_ENDIAN <---> LOW_ENDIAN
 # in: a0
 # out: a0
 .type swap64, @function
