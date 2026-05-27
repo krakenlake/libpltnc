@@ -14,7 +14,7 @@
 
 # swap 4 lower bytes in register: BIG_ENDIAN <---> LOW_ENDIAN
 # in: a0
-# out: a0
+# out: a0 (64 bit sign extended)
 .type swap32, @function
 swap32:
 	mv		a1, zero			# init result
@@ -37,7 +37,7 @@ swap32:
 	slli	t0, a0, 24			# shift byte 0 -> byte 3
 	and		t2, t0, t1
 	#or		a0, a1, t2			# final return register is a0
-	addw	a0, a1, t2
+	addw	a0, a1, t2			# use addw instead of or to get sign extension
 	ret
 .size swap32, .-swap32
 
