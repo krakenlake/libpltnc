@@ -37,6 +37,10 @@ CFLAGS += -nostartfiles
 CFLAGS += -O2
 # add debug symbols
 CFLAGS += -g
+# needed to access memory beyond 0x7fffffff
+CFLAGS += -mcmodel=medany
+
+
 LIBPLTNC_CFLAGS ?= $(CFLAGS)
 
 # names
